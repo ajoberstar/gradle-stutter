@@ -14,7 +14,7 @@ public class StutterPlugin implements Plugin<Project> {
         StutterExtension stutter = project.getExtensions().create("stutter", StutterExtension.class);
 
         project.getPluginManager().withPlugin("java", plugin -> {
-            JavaPluginConvention java = project.getExtensions().getByType(JavaPluginConvention.class);
+            JavaPluginConvention java = project.getConvention().getPlugin(JavaPluginConvention.class);
             SourceSet sourceSet = java.getSourceSets().create("compatTest");
 
             Task root = project.getTasks().create("compatTest");
