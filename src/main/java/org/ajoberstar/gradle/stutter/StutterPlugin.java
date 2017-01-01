@@ -18,10 +18,14 @@ public class StutterPlugin implements Plugin<Project> {
             SourceSet sourceSet = java.getSourceSets().create("compatTest");
 
             Task root = project.getTasks().create("compatTest");
+            root.setGroup("verification");
+            root.setDescription("Run compatibility tests against all supported Gradle versions.");
             project.getTasks().getByName("check").dependsOn(root);
 
             stutter.setAction(gradleVersion -> {
                 Test task = project.getTasks().create("compatTest" + gradleVersion, Test.class);
+                task.setGroup("verification");
+                task.setDescription("Run compatibility tests against Gradle " + gradleVersion);
                 task.setTestClassesDir(sourceSet.getOutput().getClassesDir());
                 task.setClasspath(sourceSet.getRuntimeClasspath());
                 task.systemProperty("compat.gradle.version", gradleVersion);
