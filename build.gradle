@@ -74,7 +74,7 @@ pluginBundle {
         publishPlugin {
             id = 'org.ajoberstar.stutter'
             displayName = 'Stutter Plugin'
-            tags = ['plugin']
+            tags = ['plugin-plugin']
         }
     }
     mavenCoordinates {
