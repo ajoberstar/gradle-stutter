@@ -2,10 +2,11 @@ package org.ajoberstar.gradle.stutter;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 public class StutterExtension {
-    private final Consumer<String> action;
+    private Consumer<String> action;
 
     public void supports(String... versions) {
         Arrays.stream(versions).forEach(action);

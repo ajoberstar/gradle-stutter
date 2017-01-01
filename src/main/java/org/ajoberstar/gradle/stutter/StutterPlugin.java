@@ -2,6 +2,11 @@ package org.ajoberstar.gradle.stutter;
 
 import org.gradle.api.Project;
 import org.gradle.api.Plugin;
+import org.gradle.api.Task;
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
+import org.gradle.api.tasks.testing.Test;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.plugins.JavaPluginConvention;
 
 public class StutterPlugin implements Plugin<Project> {
     @Override
@@ -16,14 +21,14 @@ public class StutterPlugin implements Plugin<Project> {
             project.getTasks().getByName("check").dependsOn(root);
 
             stutter.setAction(gradleVersion -> {
-                Task task = project.getTasks().create("compatTest" + gradleVersion, Test.class);
+                Test task = project.getTasks().create("compatTest" + gradleVersion, Test.class);
                 task.setTestClassesDir(sourceSet.getOutput().getClassesDir());
                 task.setClasspath(sourceSet.getRuntimeClasspath());
                 task.systemProperty("compat.gradle.version", gradleVersion);
                 root.dependsOn(task);
             });
 
-            project.getPluginManager().withPlugin("java-gradle-plugin", plugin -> {
+            project.getPluginManager().withPlugin("java-gradle-plugin", plugin2 -> {
                 GradlePluginDevelopmentExtension gradlePlugin = project.getExtensions().getByType(GradlePluginDevelopmentExtension.class);
                 gradlePlugin.testSourceSets(sourceSet);
             });
