@@ -1,0 +1,89 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.ajoberstar:semver-vcs-gradle-grgit:0.1.0'
+    }
+}
+
+plugins {
+    id 'groovy'
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'org.sonarqube' version '2.2.1'
+    id 'com.gradle.plugin-publish' version '0.9.7'
+    id 'org.ajoberstar.bintray' version '0.1.0-rc.2'
+}
+
+apply plugin: 'org.ajoberstar.semver-vcs-grgit'
+apply from: 'gradle/compatTest.gradle'
+
+group = 'org.ajoberstar'
+
+sonarqube {
+    properties {
+        property 'sonar.projectVersion', version.toString().split('-')[0]
+    }
+}
+
+model {
+    bintray {
+        owner = 'ajoberstar'
+        repo = 'maven'
+        pkg = 'gradle-stutter'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+configurations.all {
+    exclude group: 'org.codehaus.groovy'
+}
+
+dependencies {
+    compile gradleApi()
+
+    compatTestCompile gradleTestKit()
+    compatTestCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+}
+
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from tasks.javadoc.outputs.files
+}
+
+publishing {
+    repositories {
+        mavenLocal()
+    }
+}
+
+pluginBundle {
+    website = 'https://github.com/ajoberstar/gradle-stutter'
+    vcsUrl = 'https://github.com/ajoberstar/gradle-stutter.git'
+    description = 'A Gradle plugin plugin'
+    plugins {
+        publishPlugin {
+            id = 'org.ajoberstar.stutter'
+            displayName = 'Stutter Plugin'
+            tags = ['plugin']
+        }
+    }
+    mavenCoordinates {
+        groupId = project.group
+        artifactId = project.name
+        version = project.version
+    }
+}
+
+wrapper {
+    gradleVersion = '3.2.1'
+}
