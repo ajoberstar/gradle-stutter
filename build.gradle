@@ -61,9 +61,17 @@ task javadocJar(type: Jar) {
 }
 
 publishing {
-    repositories {
-        mavenLocal()
+    publications {
+        main(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
     }
+}
+
+gradlePlugin {
+    automatedPublishing = false
 }
 
 pluginBundle {
