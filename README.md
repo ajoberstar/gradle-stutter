@@ -90,3 +90,17 @@ to make sure it's not already in progress and for any needed discussion.
 ## Acknowledgements
 
 Thanks to all of the [contributors](https://github.com/ajoberstar/gradle-stutter/graphs/contributors).
+
+## Alternatives
+
+### TestKit (out-of-the-box)
+
+[TestKit](https://docs.gradle.org/current/userguide/test_kit.html) is built into Gradle, so it should be your first consideration. It provides a good interface to kick off full test builds and verify the output/tasks that ran. This tends to be a far more effective way to test Gradle plugin code than unit testing, due to the complexity of Gradle.
+
+On top of TestKit, Stutter provides a convenient way to run a test suite against multiple versions of Gradle. This is very useful for verifying compatibility.
+
+### GradleTest
+
+The [org.ysb33r.gradletest](https://github.com/ysb33r/gradleTest) plugin is optimized for creating and testing sample projects without you having to directly interact with TestKit. These can also be tested across multiple versions of Gradle providing helpful compatibility verification. GradleTest also provides the ability to test Gradle versions far older than Stutter does.
+
+Stutter leaves the user to decide how to leverage TestKit, it just helps provide the ability to test multiple versions with the same suite. If your use case is more centered around samples or full project tests, GradleTest may be a better fit.
