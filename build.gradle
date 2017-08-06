@@ -1,5 +1,5 @@
 plugins {
-    id 'org.ajoberstar.defaults' version '0.7.1'
+    id 'org.ajoberstar.defaults' version '0.8.0'
     id 'groovy'
     id 'java-gradle-plugin'
 }
@@ -14,7 +14,7 @@ dependencies {
     compile gradleApi()
 
     compatTestCompile gradleTestKit()
-    compatTestCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    compatTestCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
 }
 
 model {
@@ -45,5 +45,5 @@ pluginBundle {
 }
 
 wrapper {
-    gradleVersion = '3.2.1'
+    gradleVersion = '4.0.2'
 }

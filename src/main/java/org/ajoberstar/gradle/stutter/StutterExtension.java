@@ -15,8 +15,6 @@
  */
 package org.ajoberstar.gradle.stutter;
 
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
 import java.util.function.Consumer;
 

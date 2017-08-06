@@ -15,13 +15,13 @@
  */
 package org.ajoberstar.gradle.stutter;
 
-import org.gradle.api.Project;
 import org.gradle.api.Plugin;
+import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
-import org.gradle.api.tasks.testing.Test;
-import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.plugins.JavaPluginConvention;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.testing.Test;
+import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
 
 public class StutterPlugin implements Plugin<Project> {
   @Override
@@ -47,7 +47,7 @@ public class StutterPlugin implements Plugin<Project> {
                     Test task = project.getTasks().create("compatTest" + gradleVersion, Test.class);
                     task.setGroup("verification");
                     task.setDescription("Run compatibility tests against Gradle " + gradleVersion);
-                    task.setTestClassesDir(sourceSet.getOutput().getClassesDir());
+                    task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
                     task.setClasspath(sourceSet.getRuntimeClasspath());
                     task.systemProperty("compat.gradle.version", gradleVersion);
                     root.dependsOn(task);
