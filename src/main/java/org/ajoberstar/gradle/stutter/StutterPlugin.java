@@ -47,7 +47,7 @@ public class StutterPlugin implements Plugin<Project> {
                     Test task = project.getTasks().create("compatTest" + gradleVersion, Test.class);
                     task.setGroup("verification");
                     task.setDescription("Run compatibility tests against Gradle " + gradleVersion);
-                    task.setTestClassesDir(sourceSet.getOutput().getClassesDir());
+                    task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
                     task.setClasspath(sourceSet.getRuntimeClasspath());
                     task.systemProperty("compat.gradle.version", gradleVersion);
                     root.dependsOn(task);
