@@ -1,5 +1,5 @@
 plugins {
-    id 'org.ajoberstar.defaults' version '0.8.2'
+    id 'org.ajoberstar.defaults' version '0.8.3-milestone.2'
     id 'groovy'
     id 'java-gradle-plugin'
 }
@@ -42,8 +42,4 @@ pluginBundle {
         artifactId = project.name
         version = project.version
     }
-}
-
-wrapper {
-    gradleVersion = '4.0.2'
 }
