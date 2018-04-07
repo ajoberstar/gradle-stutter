@@ -1,8 +1,7 @@
 # gradle-stutter
 
 [![Download](https://api.bintray.com/packages/ajoberstar/maven/gradle-stutter/images/download.svg)](https://bintray.com/ajoberstar/maven/gradle-stutter/_latestVersion)
-[![Travis](https://img.shields.io/travis/ajoberstar/gradle-stutter.svg?style=flat-square)](https://travis-ci.org/ajoberstar/gradle-stutter)
-[![GitHub license](https://img.shields.io/github/license/ajoberstar/gradle-stutter.svg?style=flat-square)](https://github.com/ajoberstar/gradle-stutter/blob/master/LICENSE)
+[![CircleCI](https://circleci.com/gh/ajoberstar/gradle-stutter.svg?style=svg)](https://circleci.com/gh/ajoberstar/gradle-stutter)
 
 ## Why do you care?
 
@@ -10,7 +9,7 @@ When writing a Gradle plugin you often want to run the same suite of tests again
 
 ## What is it?
 
-`gradle-stutter` is a [Gradle](http://gradle.org) plugin, `org.ajoberstar.stutter`, which does some common setup for testing Gradle plugins against multiple Gradle versions.
+`gradle-stutter` is a [Gradle](http://gradle.org) plugin plugin, `org.ajoberstar.stutter`, which does some common setup for testing Gradle plugins against multiple Gradle versions.
 
 See [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) docs for more details on the out-of-the-box functionality.
 

@@ -1,45 +1,47 @@
 plugins {
-    id 'org.ajoberstar.defaults' version '0.8.3'
-    id 'groovy'
-    id 'java-gradle-plugin'
+  id 'org.ajoberstar.defaults' version '0.9.0'
+  id 'groovy'
+  id 'java-gradle-plugin'
+  // TODO remove when Gradle dependency locking is available
+  id 'nebula.dependency-lock' version '5.0.4'
 }
 
 group = 'org.ajoberstar'
 
 repositories {
-    jcenter()
+  jcenter()
 }
 
 dependencies {
-    compile gradleApi()
+  compile gradleApi()
 
-    compatTestCompile gradleTestKit()
-    compatTestCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+  compatTestCompile gradleTestKit()
+  compatTestCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
 }
 
 model {
-    bintray {
-        owner = 'ajoberstar'
-        repo = 'maven'
-        pkg = 'gradle-stutter'
-    }
+  bintray {
+    owner = 'ajoberstar'
+    repo = 'maven'
+    pkg = 'gradle-stutter'
+  }
 }
 
 
 pluginBundle {
-    website = 'https://github.com/ajoberstar/gradle-stutter'
-    vcsUrl = 'https://github.com/ajoberstar/gradle-stutter.git'
-    description = 'A Gradle plugin plugin'
-    plugins {
-        publishPlugin {
-            id = 'org.ajoberstar.stutter'
-            displayName = 'Stutter Plugin'
-            tags = ['plugin-plugin']
-        }
+  website = 'https://github.com/ajoberstar/gradle-stutter'
+  vcsUrl = 'https://github.com/ajoberstar/gradle-stutter.git'
+  description = 'A Gradle plugin plugin'
+  plugins {
+    publishPlugin {
+      id = 'org.ajoberstar.stutter'
+      displayName = 'Stutter Plugin'
+      tags = ['plugin-plugin']
     }
-    mavenCoordinates {
-        groupId = project.group
-        artifactId = project.name
-        version = project.version
-    }
+  }
+  mavenCoordinates {
+    groupId = project.group
+    artifactId = project.name
+    version = project.version
+  }
 }
