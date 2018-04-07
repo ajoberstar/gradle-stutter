@@ -11,7 +11,12 @@ When writing a Gradle plugin you often want to run the same suite of tests again
 
 `gradle-stutter` is a [Gradle](http://gradle.org) plugin plugin, `org.ajoberstar.stutter`, which does some common setup for testing Gradle plugins against multiple Gradle versions.
 
-See [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) docs for more details on the out-of-the-box functionality.
+- Extension for specifying Gradle versions that are compatible with your plugin
+- Allows specifying different compatible versions for each major Java version
+- Task to create lock file listing compatible Gradle versions
+- Generates a compatibility test task for your suite for each locked version applicable to the JVM Gradle is running under
+
+See [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) docs for more details on Gradle's out-of-the-box functionality.
 
 ## Usage
 
@@ -47,8 +52,43 @@ apply plugin: 'org.ajoberstar.stutter'
 
 ```groovy
 stutter {
-    supports '3.0', '3.1', '3.2', '3.2.1' // set which Gradle versions you want to test against
+  // Marking either of these true makes that available for use in the Java version blocks below
+  // However, they must match the compatible versions specs to be used
+  includeActiveRc = true // defaults to false
+  includeActiveNightly = true // defaults to false
+
+  // specify compatible Gradle versions for Java 8+
+  java(8) {
+    compatibleRange '3.0', '4.0' // include 3.0 <= version < 4.0
+    compatibleRange '4.2' // include 4.2 <= version
+    compatible '2.14', '1.2 // include 2.14 and 1.12 specifically
+    incompatible '3.3' // exclude 3.3 even if included above
+  }
+
+  // specify compatible Gradle versions for Java 9+
+  java(9) {
+    compatibleRange '4.0' // include 4.0 <= version
+  }
+
+  // You don't have to specify compatible Gradle versions for all Java versions you run Gradle with
+  // If an exact match isn't found, Stutter will use the lock file for the latest compatible JVM
+  // e.g. if you specify Java 8 and 9, as above
+  //      Gradle run under Java 8 will only use versions listed in the java(8) block
+  //      Gradle run under Java 9 will only user versions listed in the java(9) block
+  //      Gradle run under Java 10 will only user versions listed in the java(9) block
 }
+```
+
+### Lock file
+
+Lock files will be generated/used from the `<project>/.stutter` directory.
+
+During Gradle's configuration phase, Stutter will look for the latest compatible lock file for the JVM you're running under. (e.g. Under Java 10, it will look for `java10.lock`, then `java9.lock`, then `java8.lock`, etc. until it finds a lock file)
+
+Lock files are generated with the `stutterWriteLocks` task based on the configuration of the `stutter` extension (see above).
+
+```
+./gradlew stutterWriteLocks
 ```
 
 ### Tests
@@ -57,7 +97,7 @@ The plugin adds a `compatTest` source set that is configured via `java-gradle-pl
 
 The following tasks are available:
 
-- One `compatTest<version>` task per supported version
+- One `compatTest<version>` task per supported version (based on the compatible lock file -- see above for details)
 - An overall `compatTest` which depends on the version-specific ones
 - `check` will depend on `compatTest`, so that these run during your normal checks
 
