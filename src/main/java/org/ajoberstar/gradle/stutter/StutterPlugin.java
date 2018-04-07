@@ -2,6 +2,7 @@ package org.ajoberstar.gradle.stutter;
 
 import java.util.Set;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.StreamSupport;
 import java.util.stream.Collectors;
 import java.net.URL;
@@ -79,7 +80,9 @@ public class StutterPlugin implements Plugin<Project> {
     root.setDescription("Run compatibility tests against all supported Gradle versions.");
     project.getTasks().getByName("check").dependsOn(root);
 
+    AtomicBoolean anyVersions = new AtomicBoolean(false);
     stutter.getLockedVersions().forEach(gradleVersion -> {
+      anyVersions.set(true);
       Test task = project.getTasks().create("compatTest" + gradleVersion.getVersion(), Test.class);
       task.setGroup("verification");
       task.setDescription("Run compatibility tests against Gradle " + gradleVersion.getVersion());
@@ -88,6 +91,12 @@ public class StutterPlugin implements Plugin<Project> {
       task.systemProperty("compat.gradle.version", gradleVersion.getVersion());
       root.dependsOn(task);
     });
+
+    if (!anyVersions.get()) {
+      root.doFirst(task -> {
+        throw new IllegalStateException("No versions found to test. Configure the stutter extension and run stutterWriteLocks.");
+      });
+    }
 
     project.getPluginManager().withPlugin("java-gradle-plugin", plugin2 -> {
       GradlePluginDevelopmentExtension gradlePlugin = project.getExtensions().getByType(GradlePluginDevelopmentExtension.class);
