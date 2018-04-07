@@ -8,12 +8,15 @@ plugins {
 
 group = 'org.ajoberstar'
 
+sourceCompatibility = 8
+
 repositories {
   jcenter()
 }
 
 dependencies {
   compile gradleApi()
+  compile 'com.fasterxml.jackson.core:jackson-databind:+'
 
   compatTestCompile gradleTestKit()
   compatTestCompile 'org.spockframework:spock-core:1.1-groovy-2.4'

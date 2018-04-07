@@ -23,16 +23,58 @@
             "requested": "1.1-groovy-2.4"
         }
     },
-    "jacocoAgent": {
-        "org.jacoco:org.jacoco.agent": {
-            "locked": "0.7.9",
-            "requested": "0.7.9"
+    "compile": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
         }
     },
-    "jacocoAnt": {
-        "org.jacoco:org.jacoco.ant": {
-            "locked": "0.7.9",
-            "requested": "0.7.9"
+    "compileClasspath": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "default": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "runtime": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "runtimeClasspath": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "testCompile": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "testCompileClasspath": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "testRuntime": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
+        }
+    },
+    "testRuntimeClasspath": {
+        "com.fasterxml.jackson.core:jackson-databind": {
+            "locked": "2.9.5",
+            "requested": "+"
         }
     }
 }
