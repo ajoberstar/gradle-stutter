@@ -22,6 +22,12 @@ dependencies {
   compatTestCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
 }
 
+stutter {
+  java(8) {
+    compatibleRange '3.0'
+  }
+}
+
 model {
   bintray {
     owner = 'ajoberstar'
