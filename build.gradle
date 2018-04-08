@@ -1,5 +1,5 @@
 plugins {
-  id 'org.ajoberstar.defaults' version '0.9.1-rc.1'
+  id 'org.ajoberstar.defaults' version '0.10.0'
   id 'groovy'
   id 'java-gradle-plugin'
   // TODO remove when Gradle dependency locking is available
@@ -28,14 +28,18 @@ stutter {
   }
 }
 
-model {
-  bintray {
-    owner = 'ajoberstar'
-    repo = 'maven'
-    pkg = 'gradle-stutter'
+publishing {
+  repositories {
+    maven {
+      name = 'bintray'
+      url = 'https://api.bintray.com/maven/ajoberstar/maven/gradle-stutter/;publish=1'
+      credentials {
+        username = System.env['BINTRAY_USER']
+        password = System.env['BINTRAY_KEY']
+      }
+    }
   }
 }
-
 
 pluginBundle {
   website = 'https://github.com/ajoberstar/gradle-stutter'
