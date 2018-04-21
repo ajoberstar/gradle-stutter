@@ -1,16 +1,15 @@
 package org.ajoberstar.gradle.stutter;
 
-import javax.inject.Inject;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.Optional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import javax.inject.Inject;
+
 import org.gradle.util.GradleVersion;
 
 public class StutterMatrix {

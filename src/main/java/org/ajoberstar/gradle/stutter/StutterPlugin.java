@@ -1,18 +1,16 @@
 package org.ajoberstar.gradle.stutter;
 
-import java.util.Set;
-import java.util.Collections;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.StreamSupport;
-import java.util.stream.Collectors;
-import java.net.URL;
-import java.net.MalformedURLException;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import java.net.HttpURLConnection;
-import org.gradle.util.GradleVersion;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -21,6 +19,7 @@ import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
+import org.gradle.util.GradleVersion;
 
 public class StutterPlugin implements Plugin<Project> {
   @Override

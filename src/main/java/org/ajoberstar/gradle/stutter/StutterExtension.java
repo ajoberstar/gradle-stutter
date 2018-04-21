@@ -1,40 +1,30 @@
 package org.ajoberstar.gradle.stutter;
 
-import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.FileVisitResult;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
-import java.util.Collection;
-import java.util.SortedSet;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.regex.Pattern;
+import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.stream.Stream;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.gradle.api.Project;
+import java.util.stream.Stream;
+
 import org.gradle.api.Action;
+import org.gradle.api.Project;
+import org.gradle.api.file.DirectoryProperty;
 import org.gradle.api.model.ObjectFactory;
 import org.gradle.util.GradleVersion;
-import org.gradle.api.file.DirectoryProperty;
-import org.gradle.api.NamedDomainObjectContainer;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodType;
 
 public class StutterExtension {
   private static final Pattern JAVA_MAJOR_VERSION = Pattern.compile("^(?:1\\.)?(\\d+)(?:[\\._-]|$)");
