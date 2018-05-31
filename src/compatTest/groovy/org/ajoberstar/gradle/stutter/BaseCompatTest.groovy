@@ -14,6 +14,7 @@ class BaseCompatTest extends Specification {
   @Rule TemporaryFolder tempDir = new TemporaryFolder()
   File projectDir
   File buildFile
+  List compatTestTasks
 
   def setup() {
     projectDir = tempDir.newFolder('project')
@@ -34,6 +35,13 @@ stutter {
   }
 }
 """
+
+    // check if Java 9+ (to test the Java 8 lock vs Java 9 lock)
+    if (Runtime.metaClass.respondsTo(Runtime, 'version')) {
+      compatTestTasks = [':compatTest4.0', ':compatTest4.0.1', ':compatTest4.0.2', ':compatTest4.1', ':compatTest4.2.1']
+    } else {
+      compatTestTasks = [':compatTest3.0', ':compatTest3.1', ':compatTest3.2', ':compatTest3.2.1', ':compatTest3.3', ':compatTest3.4', ':compatTest3.4.1', ':compatTest3.5', ':compatTest3.5.1']
+    }
   }
 
   def 'without lock files no tasks are available'() {
@@ -79,24 +87,20 @@ stutter {
     def result = build('compatTest')
     then:
     result.task(':compatTest').outcome == TaskOutcome.UP_TO_DATE
-    // check if Java 9+ (to test the Java 8 lock vs Java 9 lock)
-    if (Runtime.metaClass.respondsTo(Runtime, 'version')) {
-      result.task(':compatTest4.0').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest4.0.1').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest4.0.2').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest4.1').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest4.2.1').outcome == TaskOutcome.NO_SOURCE
-    } else {
-      result.task(':compatTest3.0').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.1').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.2').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.2.1').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.3').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.4').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.4.1').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.5').outcome == TaskOutcome.NO_SOURCE
-      result.task(':compatTest3.5.1').outcome == TaskOutcome.NO_SOURCE
+    compatTestTasks.each {
+      assert result.task(it).outcome == TaskOutcome.NO_SOURCE
     }
+  }
+
+  def 'ensure compatTest runs after test'() {
+    given:
+    build('stutterWriteLocks')
+    when:
+    def result = build('compatTest', 'test')
+    def taskOrder = result.tasks.collect { it.path }.findAll { (it.startsWith(':test') || it.startsWith(':compatTest')) && !it.endsWith('Classes') }
+    println taskOrder
+    then:
+    taskOrder == [':test', compatTestTasks, ':compatTest'].flatten()
   }
 
   private BuildResult build(String... args = []) {

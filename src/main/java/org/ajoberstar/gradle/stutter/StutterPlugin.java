@@ -78,6 +78,7 @@ public class StutterPlugin implements Plugin<Project> {
     root.setGroup("verification");
     root.setDescription("Run compatibility tests against all supported Gradle versions.");
     project.getTasks().getByName("check").dependsOn(root);
+    Task test = project.getTasks().getByName("test");
 
     AtomicBoolean anyVersions = new AtomicBoolean(false);
     stutter.getLockedVersions().forEach(gradleVersion -> {
@@ -88,6 +89,7 @@ public class StutterPlugin implements Plugin<Project> {
       task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
       task.setClasspath(sourceSet.getRuntimeClasspath());
       task.systemProperty("compat.gradle.version", gradleVersion.getVersion());
+      task.shouldRunAfter(test);
       root.dependsOn(task);
     });
 
