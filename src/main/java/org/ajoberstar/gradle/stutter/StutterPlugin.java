@@ -5,6 +5,7 @@ import java.io.UncheckedIOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -15,6 +16,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.Directory;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.testing.Test;
@@ -78,6 +80,7 @@ public class StutterPlugin implements Plugin<Project> {
     root.setGroup("verification");
     root.setDescription("Run compatibility tests against all supported Gradle versions.");
     project.getTasks().getByName("check").dependsOn(root);
+    Task test = project.getTasks().getByName("test");
 
     AtomicBoolean anyVersions = new AtomicBoolean(false);
     stutter.getLockedVersions().forEach(gradleVersion -> {
@@ -86,8 +89,10 @@ public class StutterPlugin implements Plugin<Project> {
       task.setGroup("verification");
       task.setDescription("Run compatibility tests against Gradle " + gradleVersion.getVersion());
       task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
-      task.setClasspath(sourceSet.getRuntimeClasspath());
+      Callable<FileCollection> classpath = () -> sourceSet.getRuntimeClasspath();
+      task.setClasspath(project.files(classpath));
       task.systemProperty("compat.gradle.version", gradleVersion.getVersion());
+      task.shouldRunAfter(test);
       root.dependsOn(task);
     });
 
