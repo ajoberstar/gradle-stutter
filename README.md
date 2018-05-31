@@ -64,7 +64,7 @@ stutter {
   java(8) {
     compatibleRange '3.0', '4.0' // include 3.0 <= version < 4.0
     compatibleRange '4.2' // include 4.2 <= version
-    compatible '2.14', '1.2 // include 2.14 and 1.12 specifically
+    compatible '2.14', '1.2' // include 2.14 and 1.12 specifically
     incompatible '3.3' // exclude 3.3 even if included above
   }
 
@@ -77,8 +77,8 @@ stutter {
   // If an exact match isn't found, Stutter will use the lock file for the latest compatible JVM
   // e.g. if you specify Java 8 and 9, as above
   //      Gradle run under Java 8 will only use versions listed in the java(8) block
-  //      Gradle run under Java 9 will only user versions listed in the java(9) block
-  //      Gradle run under Java 10 will only user versions listed in the java(9) block
+  //      Gradle run under Java 9 will only use versions listed in the java(9) block
+  //      Gradle run under Java 10 will only use versions listed in the java(9) block
 
   // If you have a lot of tests, or otherwise just don't want to test every Gradle version that you say is compatible,
   // use sparse = true. This will greatly limit the number of versions you test against, but should do the job of
