@@ -103,6 +103,43 @@ stutter {
     taskOrder == [':test', compatTestTasks, ':compatTest'].flatten()
   }
 
+  def 'modified runtimeClasspath is respected'() {
+    given:
+    projectFile('build.gradle') << '''\
+sourceSets {
+  compatTest.runtimeClasspath = files()
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compatTestImplementation gradleTestKit()
+  compatTestImplementation 'junit:junit:4.12'
+}
+'''
+    projectFile('src/compatTest/java/org/ajoberstar/Example.java') << '''\
+package org.ajoberstar;
+
+import org.gradle.testkit.runner.TaskOutcome;
+import org.junit.Test;
+
+public class Example {
+  @Test
+  public void test() {
+    System.out.println(TaskOutcome.SUCCESS);
+  }
+}
+'''
+    build('stutterWriteLocks')
+    when:
+    def result = buildAndFail('compatTest')
+    then:
+    result.task(':compileCompatTestJava').outcome == TaskOutcome.SUCCESS
+    result.task(compatTestTasks[0]).outcome == TaskOutcome.FAILED
+  }
+
   private BuildResult build(String... args = []) {
     return GradleRunner.create()
       .withGradleVersion(System.properties['compat.gradle.version'])
