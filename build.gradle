@@ -1,9 +1,7 @@
 plugins {
-  id 'org.ajoberstar.defaults' version '0.11.0'
+  id 'org.ajoberstar.defaults' version '0.12.0-rc.3'
   id 'groovy'
   id 'java-gradle-plugin'
-  // TODO remove when Gradle dependency locking is available
-  id 'nebula.dependency-lock' version '5.0.4'
 }
 
 group = 'org.ajoberstar'
@@ -14,12 +12,16 @@ repositories {
   jcenter()
 }
 
+dependencyLocking {
+  lockAllConfigurations()
+}
+
 dependencies {
   implementation gradleApi()
-  implementation 'com.fasterxml.jackson.core:jackson-databind:+'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:latest.release'
 
-  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.2.0'
-  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.2.0'
+  testImplementation 'org.junit.jupiter:junit-jupiter-api:latest.release'
+  testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:latest.release'
 
   compatTestImplementation gradleTestKit()
   compatTestImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
@@ -30,6 +32,7 @@ test {
 }
 
 stutter {
+  sparse = true
   includeActiveRc = true
   java(8) {
     compatibleRange '4.3'
