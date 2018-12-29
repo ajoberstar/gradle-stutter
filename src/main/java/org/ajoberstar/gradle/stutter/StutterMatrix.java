@@ -34,7 +34,7 @@ public class StutterMatrix {
 
   public void compatibleRange(String startingInclusive) {
     GradleVersion start = GradleVersion.version(startingInclusive);
-    compatibleRanges.add(version -> version.compareTo(start) >= 0);
+    compatibleRanges.add(version -> version.getBaseVersion().compareTo(start) >= 0);
   }
 
   public void compatibleRange(String startingInclusive, String endingExclusive) {
@@ -44,7 +44,7 @@ public class StutterMatrix {
     if (start.compareTo(end) >= 0) {
       throw new IllegalArgumentException("Starting version must be less than ending version: " + startingInclusive + " to " + endingExclusive);
     }
-    compatibleRanges.add(version -> version.compareTo(start) >= 0 && version.compareTo(end) < 0);
+    compatibleRanges.add(version -> version.getBaseVersion().compareTo(start) >= 0 && version.getBaseVersion().compareTo(end) < 0);
   }
 
   public void incompatible(String... versions) {

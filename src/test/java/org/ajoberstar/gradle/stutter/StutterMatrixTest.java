@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 public class StutterMatrixTest {
   private final Set<GradleVersion> versions = Stream.of(
-      "3.0", "3.1", "3.2", "3.2.1", "3.3", "3.3.1", "3.4", "3.5", "4.0", "4.1", "4.2.1", "4.3", "4.4-rc-1").map(GradleVersion::version).collect(Collectors.toSet());
+      "3.0", "3.1", "3.2", "3.2.1", "3.3", "3.3.1", "3.4", "3.5", "4.0-rc-2", "4.0", "4.1", "4.2.1", "4.3", "4.4-rc-1").map(GradleVersion::version).collect(Collectors.toSet());
 
   @Test
   public void onlySpecifyingCompatibleReturnsExactMatches() {
@@ -49,7 +49,7 @@ public class StutterMatrixTest {
     StutterMatrix matrix = new StutterMatrix(11);
     matrix.compatibleRange("4.0");
 
-    Set<String> expected = Stream.of("4.0", "4.1", "4.2.1", "4.3", "4.4-rc-1")
+    Set<String> expected = Stream.of("4.0-rc-2", "4.0", "4.1", "4.2.1", "4.3", "4.4-rc-1")
         .collect(Collectors.toSet());
 
     Set<String> actual = matrix.allCompatible(versions, false)
@@ -65,7 +65,7 @@ public class StutterMatrixTest {
     matrix.compatibleRange("4.0");
     matrix.incompatible("4.1");
 
-    Set<String> expected = Stream.of("4.0", "4.2.1", "4.3", "4.4-rc-1")
+    Set<String> expected = Stream.of("4.0-rc-2", "4.0", "4.2.1", "4.3", "4.4-rc-1")
         .collect(Collectors.toSet());
 
     Set<String> actual = matrix.allCompatible(versions, false)
@@ -81,7 +81,7 @@ public class StutterMatrixTest {
     matrix.compatibleRange("3.0");
     matrix.compatible("3.2.1");
 
-    Set<String> expected = Stream.of("3.0", "3.5", "4.0", "4.4-rc-1")
+    Set<String> expected = Stream.of("3.0", "3.5", "4.0-rc-2", "4.4-rc-1")
         .collect(Collectors.toSet());
 
     Set<String> actual = matrix.allCompatible(versions, true)
