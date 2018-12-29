@@ -2,11 +2,11 @@
 # Manual edits can break the build and are not advised.
 # This file is expected to be part of source control.
 com.fasterxml.jackson.core:jackson-annotations:2.9.0
-com.fasterxml.jackson.core:jackson-core:2.9.5
-com.fasterxml.jackson.core:jackson-databind:2.9.5
+com.fasterxml.jackson.core:jackson-core:2.9.8
+com.fasterxml.jackson.core:jackson-databind:2.9.8
 org.apiguardian:apiguardian-api:1.0.0
-org.junit.jupiter:junit-jupiter-api:5.2.0
-org.junit.jupiter:junit-jupiter-engine:5.2.0
-org.junit.platform:junit-platform-commons:1.2.0
-org.junit.platform:junit-platform-engine:1.2.0
-org.opentest4j:opentest4j:1.1.0
+org.junit.jupiter:junit-jupiter-api:5.4.0-M1
+org.junit.jupiter:junit-jupiter-engine:5.4.0-M1
+org.junit.platform:junit-platform-commons:1.4.0-M1
+org.junit.platform:junit-platform-engine:1.4.0-M1
+org.opentest4j:opentest4j:1.1.1

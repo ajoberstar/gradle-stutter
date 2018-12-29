@@ -24,7 +24,7 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:latest.release'
 
   compatTestImplementation gradleTestKit()
-  compatTestImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
+  compatTestImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
 }
 
 test {
