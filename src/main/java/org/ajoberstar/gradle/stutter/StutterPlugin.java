@@ -53,9 +53,10 @@ public class StutterPlugin implements Plugin<Project> {
             .filter(node -> {
               boolean finalVersion = node.get("rcFor").asText().isEmpty()
                   && node.get("milestoneFor").asText().isEmpty()
-                  && !node.get("nightly").asBoolean();
+                  && !node.get("nightly").asBoolean()
+                  && !node.get("releaseNightly").asBoolean();
               boolean activeRc = stutter.isIncludeActiveRc() && node.get("activeRc").asBoolean();
-              boolean activeNightly = stutter.isIncludeActiveNightly() && node.get("nightly").asBoolean();
+              boolean activeNightly = stutter.isIncludeActiveNightly() && (node.get("nightly").asBoolean() || node.get("releaseNightly").asBoolean());
               return finalVersion || activeRc || activeNightly;
             })
             .map(node -> node.get("version").asText())
