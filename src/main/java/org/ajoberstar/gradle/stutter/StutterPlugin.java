@@ -49,14 +49,20 @@ public class StutterPlugin implements Plugin<Project> {
         Set<GradleVersion> allVersions = StreamSupport.stream(versions.spliterator(), false)
             // don't include broken versions
             .filter(node -> !node.get("broken").asBoolean())
-            // include final versions and at user option the active rc and/or nightly
+            // include final versions, rcs, and milestones
             .filter(node -> {
-              boolean finalVersion = node.get("rcFor").asText().isEmpty()
-                  && node.get("milestoneFor").asText().isEmpty()
-                  && !node.get("nightly").asBoolean();
-              boolean activeRc = stutter.isIncludeActiveRc() && node.get("activeRc").asBoolean();
-              boolean activeNightly = stutter.isIncludeActiveNightly() && node.get("nightly").asBoolean();
-              return finalVersion || activeRc || activeNightly;
+              /*
+               * The API doesn't return a simple stage field that would make this simpler. Instead it has a bunch
+               * of properties that indicate different kinds of pre-releases, and if any new one is added, it
+               * could cause us to treat it as final if we rely on their presence (e.g. when releaseNightly was
+               * added). So, we're determining it's final on our own, then relying on specific fields for other
+               * pre-release stages we want to include. It's not as big a deal if one of those breaks.
+               */
+              GradleVersion version = GradleVersion.version(node.get("version").asText());
+              boolean finalVersion = version.equals(version.getBaseVersion());
+              boolean rcVersion = !node.get("rcFor").asText().isEmpty();
+              boolean milestoneVersion = !node.get("milestoneFor").asText().isEmpty();
+              return finalVersion || rcVersion || milestoneVersion;
             })
             .map(node -> node.get("version").asText())
             .map(GradleVersion::version)

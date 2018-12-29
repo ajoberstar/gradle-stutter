@@ -34,12 +34,14 @@ public class StutterExtension {
   private final DirectoryProperty lockDir;
   private final Map<Integer, StutterMatrix> matrices;
   private boolean sparse = false;
-  private boolean includeActiveNightly = false;
-  private boolean includeActiveRc = false;
 
   public StutterExtension(Project project) {
     this.objectFactory = project.getObjects();
-    this.lockDir = project.getLayout().directoryProperty();
+    if (GradleVersion.current().getBaseVersion().compareTo(GradleVersion.version("5.0")) < 0) {
+      this.lockDir = project.getLayout().directoryProperty();
+    } else {
+      this.lockDir = project.getObjects().directoryProperty();
+    }
     this.matrices = new HashMap<>();
   }
 
@@ -59,22 +61,6 @@ public class StutterExtension {
 
   public void setSparse(boolean sparse) {
     this.sparse = sparse;
-  }
-
-  public boolean isIncludeActiveNightly() {
-    return includeActiveNightly;
-  }
-
-  public void setIncludeActiveNightly(boolean includeActiveNightly) {
-    this.includeActiveNightly = includeActiveNightly;
-  }
-
-  public boolean isIncludeActiveRc() {
-    return includeActiveRc;
-  }
-
-  public void setIncludeActiveRc(boolean includeActiveRc) {
-    this.includeActiveRc = includeActiveRc;
   }
 
   Set<GradleVersion> getLockedVersions() {

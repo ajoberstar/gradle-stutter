@@ -1,5 +1,5 @@
 plugins {
-  id 'org.ajoberstar.defaults' version '0.12.0'
+  id 'org.ajoberstar.defaults' version '0.14.1'
   id 'groovy'
   id 'java-gradle-plugin'
 }
@@ -24,7 +24,7 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:latest.release'
 
   compatTestImplementation gradleTestKit()
-  compatTestImplementation 'org.spockframework:spock-core:1.1-groovy-2.4'
+  compatTestImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
 }
 
 test {
@@ -36,6 +36,9 @@ stutter {
   includeActiveRc = true
   java(8) {
     compatibleRange '4.3'
+  }
+  java(11) {
+    compatibleRange '5.0'
   }
 }
 

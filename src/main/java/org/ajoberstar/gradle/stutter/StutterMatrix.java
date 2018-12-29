@@ -34,7 +34,7 @@ public class StutterMatrix {
 
   public void compatibleRange(String startingInclusive) {
     GradleVersion start = GradleVersion.version(startingInclusive);
-    compatibleRanges.add(version -> version.compareTo(start) >= 0);
+    compatibleRanges.add(version -> version.getBaseVersion().compareTo(start) >= 0);
   }
 
   public void compatibleRange(String startingInclusive, String endingExclusive) {
@@ -44,7 +44,7 @@ public class StutterMatrix {
     if (start.compareTo(end) >= 0) {
       throw new IllegalArgumentException("Starting version must be less than ending version: " + startingInclusive + " to " + endingExclusive);
     }
-    compatibleRanges.add(version -> version.compareTo(start) >= 0 && version.compareTo(end) < 0);
+    compatibleRanges.add(version -> version.getBaseVersion().compareTo(start) >= 0 && version.getBaseVersion().compareTo(end) < 0);
   }
 
   public void incompatible(String... versions) {
@@ -69,22 +69,58 @@ public class StutterMatrix {
     Stream<GradleVersion> knownCompatible = Stream.concat(knownCompatibleExact, knownCompatibleRange)
         .filter(version -> !incompatibleVersions.contains(version));
 
-    if (sparse) {
-      Function<GradleVersion, Integer> majorVersion = version -> Integer.parseInt(version.getVersion().substring(0, version.getVersion().indexOf('.')));
-      Function<List<GradleVersion>, Stream<GradleVersion>> toMinMax = vers -> {
-        Optional<GradleVersion> min = vers.stream().min(Comparator.naturalOrder());
-        Optional<GradleVersion> max = vers.stream().max(Comparator.naturalOrder());
-        return Stream.of(min, max)
-            // TODO Java 9 Optional::stream
-            .filter(Optional::isPresent)
-            .map(Optional::get);
-      };
+    Stream<GradleVersion> knownCompatibleMinors = compatibleMinors(knownCompatible);
 
-      Map<Integer, List<GradleVersion>> versionsByMajor = knownCompatible.collect(Collectors.groupingBy(majorVersion));
-      return versionsByMajor.values().stream()
-          .flatMap(toMinMax);
+    if (sparse) {
+      return compatibleSparse(knownCompatibleMinors);
     } else {
-      return knownCompatible;
+      return knownCompatibleMinors;
     }
+  }
+
+  private Stream<GradleVersion> compatibleMinors(Stream<GradleVersion> versions) {
+    Function<GradleVersion, String> minorVersion = version -> {
+      String[] parts = version.getBaseVersion().getVersion().split("\\.");
+      if (parts.length < 2) {
+        throw new IllegalArgumentException("Version doesn't contain a major and minor component: " + version);
+      } else {
+        return String.format("%s.%s", parts[0], parts[1]);
+      }
+    };
+
+    // only include most mature version for each minor (i.e. no rcs if a final exists, no .0 if a .1
+    // patch exists)
+    Function<List<GradleVersion>, Stream<GradleVersion>> toMax = vers -> {
+      Optional<GradleVersion> max = vers.stream().max(Comparator.naturalOrder());
+      Optional<GradleVersion> maxFinal = vers.stream().filter(ver -> ver.equals(ver.getBaseVersion())).max(Comparator.naturalOrder());
+
+      return Stream.of(max, maxFinal)
+          // TODO Java 9 Optional::stream
+          .filter(Optional::isPresent)
+          .map(Optional::get);
+    };
+
+    Map<String, List<GradleVersion>> versionsByMinor = versions.collect(Collectors.groupingBy(minorVersion));
+    return versionsByMinor.values().stream()
+        .flatMap(toMax);
+  }
+
+  private Stream<GradleVersion> compatibleSparse(Stream<GradleVersion> versions) {
+    Function<GradleVersion, String> majorVersion = version -> version.getVersion().substring(0, version.getVersion().indexOf('.'));
+
+    Function<List<GradleVersion>, Stream<GradleVersion>> toMinMax = vers -> {
+      Optional<GradleVersion> min = vers.stream().min(Comparator.naturalOrder());
+      Optional<GradleVersion> max = vers.stream().max(Comparator.naturalOrder());
+      Optional<GradleVersion> maxFinal = vers.stream().filter(ver -> ver.equals(ver.getBaseVersion())).max(Comparator.naturalOrder());
+
+      return Stream.of(min, max, maxFinal)
+          // TODO Java 9 Optional::stream
+          .filter(Optional::isPresent)
+          .map(Optional::get);
+    };
+
+    Map<String, List<GradleVersion>> versionsByMajor = versions.collect(Collectors.groupingBy(majorVersion));
+    return versionsByMajor.values().stream()
+        .flatMap(toMinMax);
   }
 }
