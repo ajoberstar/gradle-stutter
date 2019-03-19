@@ -55,11 +55,6 @@ stutter {
   // Only match min/max within that otherwise matches your compatibility specs in each Gradle major version
   sparse = true // defaults to false
 
-  // Marking either of these true makes that available for use in the Java version blocks below
-  // However, they must match the compatible versions specs to be used
-  includeActiveRc = true // defaults to false
-  includeActiveNightly = true // defaults to false
-
   // specify compatible Gradle versions for Java 8+
   java(8) {
     compatibleRange '3.0', '4.0' // include 3.0 <= version < 4.0
