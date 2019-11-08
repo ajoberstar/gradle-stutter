@@ -43,7 +43,7 @@ public class StutterPlugin implements Plugin<Project> {
     lock.setDescription("Generate lock files of Gradle versions to test for compatibility.");
     lock.doLast(task -> {
       try {
-        URL serviceUrl = new URL("http://services.gradle.org/versions/all");
+        URL serviceUrl = new URL("https://services.gradle.org/versions/all");
         JsonNode versions = new ObjectMapper().readValue(serviceUrl, JsonNode.class);
 
         Set<GradleVersion> allVersions = StreamSupport.stream(versions.spliterator(), false)
