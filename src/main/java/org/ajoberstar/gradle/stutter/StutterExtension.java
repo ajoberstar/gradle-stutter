@@ -37,11 +37,7 @@ public class StutterExtension {
 
   public StutterExtension(Project project) {
     this.objectFactory = project.getObjects();
-    if (GradleVersion.current().getBaseVersion().compareTo(GradleVersion.version("5.0")) < 0) {
-      this.lockDir = project.getLayout().directoryProperty();
-    } else {
-      this.lockDir = project.getObjects().directoryProperty();
-    }
+    this.lockDir = project.getObjects().directoryProperty();
     this.matrices = new HashMap<>();
   }
 
