@@ -29,7 +29,7 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
 
   compatTestImplementation(gradleTestKit())
-  compatTestImplementation("org.spockframework:spock-core:1.3-groovy-2.5")
+  compatTestImplementation("org.spockframework:spock-core:2.0-groovy-3.0")
 }
 
 tasks.named<Jar>("jar") {
@@ -38,7 +38,7 @@ tasks.named<Jar>("jar") {
   }
 }
 
-tasks.named<Test>("test") {
+tasks.withType<Test>() {
   useJUnitPlatform()
 }
 
