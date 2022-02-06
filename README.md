@@ -25,27 +25,10 @@ changes and compatibility with Java and Gradle versions.
 
 ### Applying the Plugin
 
-**Plugins DSL**
-
 ```groovy
 plugins {
     id 'org.ajoberstar.stutter' version '<version>'
 }
-```
-
-**Classic**
-
-```groovy
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'org.ajoberstar:gradle-stutter:<version>'
-    }
-}
-
-apply plugin: 'org.ajoberstar.stutter'
 ```
 
 ### Configuration
@@ -53,22 +36,34 @@ apply plugin: 'org.ajoberstar.stutter'
 ```groovy
 stutter {
   // Only match min/max within that otherwise matches your compatibility specs in each Gradle major version
-  sparse = true // defaults to false
+  sparse = false // defaults to true
 
-  // specify compatible Gradle versions for Java 8+
-  java(8) {
-    compatibleRange '3.0', '4.0' // include 3.0 <= version < 4.0
-    compatibleRange '4.2' // include 4.2 <= version
-    compatible '2.14', '1.2' // include 2.14 and 1.12 specifically
-    incompatible '3.3' // exclude 3.3 even if included above
+  matrices {
+    // a matrix of tests running against Java 8
+    java8 {
+      javaToolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+      }
+      gradleVersions {
+        compatibleRange '3.0', '4.0' // include 3.0 <= version < 4.0
+        compatibleRange '4.2' // include 4.2 <= version
+        compatible '2.14', '1.2' // include 2.14 and 1.12 specifically
+        incompatible '3.3' // exclude 3.3 even if included above
+      }
+    }
+
+    // name can be anything
+    jdkNine {
+      javaToolchain {
+        languageVersion = JavaLanguageVersion.of(9)
+      }
+      gradleVersions {
+        compatibleRange '4.0' // include 4.0 <= version
+      }
+    }
   }
 
-  // specify compatible Gradle versions for Java 9+
-  java(9) {
-    compatibleRange '4.0' // include 4.0 <= version
-  }
-
-  // You don't have to specify compatible Gradle versions for all Java versions you run Gradle with
+  // You do have to specify compatible Gradle versions for all Java versions you run Gradle with
   // If an exact match isn't found, Stutter will use the lock file for the latest compatible JVM
   // e.g. if you specify Java 8 and 9, as above
   //      Gradle run under Java 8 will only use versions listed in the java(8) block
@@ -85,9 +80,7 @@ stutter {
 
 ### Lock file
 
-Lock files will be generated/used from the `<project>/.stutter` directory.
-
-During Gradle's configuration phase, Stutter will look for the latest compatible lock file for the JVM you're running under. (e.g. Under Java 10, it will look for `java10.lock`, then `java9.lock`, then `java8.lock`, etc. until it finds a lock file)
+Lock files will be generated/used from the `<project>/stutter.lockfile` directory.
 
 Lock files are generated with the `stutterWriteLocks` task based on the configuration of the `stutter` extension (see above).
 
@@ -101,9 +94,16 @@ The plugin adds a `compatTest` source set that is configured via `java-gradle-pl
 
 The following tasks are available:
 
-- One `compatTest<version>` task per supported version (based on the compatible lock file -- see above for details)
-- An overall `compatTest` which depends on the version-specific ones
-- `check` will depend on `compatTest`, so that these run during your normal checks
+- One `compatTest<matrix>Gradle<version>` (e.g. `compatTestJava8Gradle7.3.3`) task per supported version (based on the compatible lock file -- see above for details)
+- A matrix-level `compatTest<matrix>` (e.g. `compatTestJava8`) task that depends on all specific Gradle versions tasks for that matrix. This allows you to run all of the tests for a given JDK matrix via one convenient task.
+- An overall `compatTest` which depends on all of the matrix-level tasks. This allows you to run all tests for all JDKs and Gradle versions.
+- `check` does not depend on `compatTest` by default, but you can add a dependency easily
+
+  ```
+  tasks.named("check") {
+    dependsOn(tasks.named("compatTest"))
+  }
+  ```
 
 Your tests should reference the `compat.gradle.version` system property when they specify a version on the `GradleRunner`:
 
@@ -111,6 +111,64 @@ Your tests should reference the `compat.gradle.version` system property when the
 GradleRunner.create()
     .withGradleVersion(System.getProperty("compat.gradle.version"))
     //...
+```
+
+## Migrating from 0.6.0
+
+- Gradle must be run with Java 11 or higher
+- Lock files have moved from `.stutter/` to `stutter.lockfile` (you should delete the `.stutter/` directory)
+- `sparse` is now the default, you can still set it to `false` if you prefer
+- `check` does not depend on `compatTest` anymore. This gives you more flexibilty as to which tests are run by default.
+- Syntax changes in the stutter extension:
+
+From:
+
+```
+stutter {
+  sparse = true
+
+  java(8) {
+    compatibleRange '3.0', '4.0'
+    compatibleRange '4.2'
+    compatible '2.14', '1.2'
+    incompatible '3.3'
+  }
+
+  java(9) {
+    compatibleRange '4.0'
+  }
+}
+```
+
+To:
+
+```
+stutter {
+  sparse = true
+
+  matrices {
+    java8 {
+      javaToolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+      }
+      gradleVersions {
+        compatibleRange '3.0', '4.0'
+        compatibleRange '4.2'
+        compatible '2.14', '1.2'
+        incompatible '3.3'
+      }
+    }
+
+    java9 {
+      javaToolchain {
+        languageVersion = JavaLanguageVersion.of(9)
+      }
+      gradleVersions {
+        compatibleRange '4.0'
+      }
+    }
+  }
+}
 ```
 
 ## Questions, Bugs, and Features
