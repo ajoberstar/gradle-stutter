@@ -23,7 +23,6 @@ configurations.configureEach {
 }
 
 dependencies {
-  compileOnly(gradleApi())
   implementation("com.fasterxml.jackson.core:jackson-databind:latest.release")
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
