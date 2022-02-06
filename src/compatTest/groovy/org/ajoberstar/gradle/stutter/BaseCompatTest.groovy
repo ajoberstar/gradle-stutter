@@ -1,23 +1,22 @@
 package org.ajoberstar.gradle.stutter
 
 import spock.lang.Specification
+import spock.lang.TempDir
 import spock.lang.Unroll
 
 import org.gradle.util.GradleVersion
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.TaskOutcome
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 
 class BaseCompatTest extends Specification {
-  @Rule TemporaryFolder tempDir = new TemporaryFolder()
+  @TempDir File tempDir
   File projectDir
   File buildFile
   List compatTestTasks
 
   def setup() {
-    projectDir = tempDir.newFolder('project')
+    projectDir = new File(tempDir, 'project')
     buildFile = projectFile('build.gradle')
     buildFile << """\
 plugins {

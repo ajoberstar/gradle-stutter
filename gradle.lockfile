@@ -1,0 +1,29 @@
+# This is a Gradle generated file for dependency locking.
+# Manual edits can break the build and are not advised.
+# This file is expected to be part of source control.
+cglib:cglib-nodep:3.3.0=compatTestCompileClasspath,compatTestRuntimeClasspath
+com.fasterxml.jackson.core:jackson-annotations:2.13.1=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-core:2.13.1=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-databind:2.13.1=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson:jackson-bom:2.13.1=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+net.bytebuddy:byte-buddy:1.11.0=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.apiguardian:apiguardian-api:1.1.0=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.apiguardian:apiguardian-api:1.1.2=testCompileClasspath
+org.assertj:assertj-core:3.16.1=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.hamcrest:hamcrest:2.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.jetbrains:annotations:20.1.0=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit.jupiter:junit-jupiter-api:5.8.2=testCompileClasspath,testRuntimeClasspath
+org.junit.jupiter:junit-jupiter-engine:5.8.2=testRuntimeClasspath
+org.junit.platform:junit-platform-commons:1.7.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit.platform:junit-platform-commons:1.8.2=testCompileClasspath,testRuntimeClasspath
+org.junit.platform:junit-platform-engine:1.7.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit.platform:junit-platform-engine:1.8.2=testRuntimeClasspath
+org.junit.platform:junit-platform-launcher:1.7.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit.platform:junit-platform-testkit:1.7.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit:junit-bom:5.7.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.junit:junit-bom:5.8.2=testCompileClasspath,testRuntimeClasspath
+org.objenesis:objenesis:3.2=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.opentest4j:opentest4j:1.2.0=compatTestCompileClasspath,compatTestRuntimeClasspath,testCompileClasspath,testRuntimeClasspath
+org.ow2.asm:asm:9.1=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.spockframework:spock-core:2.0-groovy-3.0=compatTestCompileClasspath,compatTestRuntimeClasspath
+empty=
