@@ -85,7 +85,7 @@ public class StutterPlugin implements Plugin<Project> {
           task.setGroup("verification");
           task.setDescription(String.format("Run compatibility tests for %s against Gradle %s", matrix.getName(), gradleVersion.getVersion()));
 
-          task.getJavaLauncher().set(javaToolchains.launcherFor(matrix.getJavaToolchainSpec()));
+          task.getJavaLauncher().set(matrix.getJavaLauncher());
 
           task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
           Callable<FileCollection> classpath = () -> sourceSet.getRuntimeClasspath();
