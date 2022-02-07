@@ -43,16 +43,27 @@ tasks.withType<Test>() {
 }
 
 stutter {
-  setSparse(true)
-  java(8) {
-    compatibleRange("5.0")
+  val java11 by matrices.creating {
+    javaToolchain {
+      languageVersion.set(JavaLanguageVersion.of(11))
+    }
+    gradleVersions {
+      compatibleRange("7.0")
+    }
   }
-  java(15) {
-    compatibleRange("6.3")
+
+  val java17 by matrices.creating {
+    javaToolchain {
+      languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    gradleVersions {
+      compatibleRange("7.3")
+    }
   }
-  java(17) {
-    compatibleRange("7.3")
-  }
+}
+
+tasks.named("check") {
+  dependsOn(tasks.named("compatTest"))
 }
 
 pluginBundle {
