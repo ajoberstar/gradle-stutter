@@ -11,10 +11,11 @@ When writing a Gradle plugin you often want to run the same suite of tests again
 
 `gradle-stutter` is a [Gradle](http://gradle.org) plugin plugin, `org.ajoberstar.stutter`, which does some common setup for testing Gradle plugins against multiple Gradle versions.
 
-- Extension for specifying Gradle versions that are compatible with your plugin
-- Allows specifying different compatible versions for each major Java version
+- Extension for specifying Java and Gradle versions that are compatible with your plugin
+- Allows specifying different compatible versions for each Java version
 - Task to create lock file listing compatible Gradle versions
-- Generates a compatibility test task for your suite for each locked version applicable to the JVM Gradle is running under
+- Generates a compatibility test task for your suite for each combination of supported Java version and Gradle version
+- Uses Gradle's [toolchain](https://docs.gradle.org/current/userguide/toolchains.html) feature to run each suite under the appropriate JDK
 
 See [java-gradle-plugin](https://docs.gradle.org/current/userguide/javaGradle_plugin.html) docs for more details on Gradle's out-of-the-box functionality.
 
@@ -35,7 +36,7 @@ plugins {
 
 ```groovy
 stutter {
-  // Only match min/max within that otherwise matches your compatibility specs in each Gradle major version
+  // if true, only match min/max within that otherwise matches your compatibility specs in each Gradle major version
   sparse = false // defaults to true
 
   matrices {
@@ -64,11 +65,6 @@ stutter {
   }
 
   // You do have to specify compatible Gradle versions for all Java versions you run Gradle with
-  // If an exact match isn't found, Stutter will use the lock file for the latest compatible JVM
-  // e.g. if you specify Java 8 and 9, as above
-  //      Gradle run under Java 8 will only use versions listed in the java(8) block
-  //      Gradle run under Java 9 will only use versions listed in the java(9) block
-  //      Gradle run under Java 10 will only use versions listed in the java(9) block
 
   // If you have a lot of tests, or otherwise just don't want to test every Gradle version that you say is compatible,
   // use sparse = true. This will greatly limit the number of versions you test against, but should do the job of
