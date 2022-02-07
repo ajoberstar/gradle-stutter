@@ -33,6 +33,9 @@ public class GenerateStutterLocks extends DefaultTask {
     this.outputFile = objectFactory.fileProperty();
     this.matrices = objectFactory.setProperty(StutterMatrix.class);
     this.sparse = objectFactory.property(Boolean.class);
+
+    // this task should always be out of date
+    this.getOutputs().upToDateWhen(t -> false);
   }
 
   @TaskAction
