@@ -148,7 +148,7 @@ public class Example {
       .withPluginClasspath()
       .withProjectDir(projectDir)
       .forwardOutput()
-      .withArguments((args + '--stacktrace') as String[])
+      .withArguments(((args + '--stacktrace') + '--configuration-cache') as String[])
       .build()
   }
 
@@ -158,7 +158,7 @@ public class Example {
       .withPluginClasspath()
       .withProjectDir(projectDir)
       .forwardOutput()
-      .withArguments((args + '--stacktrace') as String[])
+      .withArguments(((args + '--stacktrace') + '--configuration-cache') as String[])
       .buildAndFail()
   }
 

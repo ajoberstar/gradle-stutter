@@ -74,7 +74,7 @@ public class StutterPlugin implements Plugin<Project> {
       if (matrixLockedVersions.isEmpty()) {
         matrixRoot.configure(task -> {
           task.doFirst(t -> {
-            project.getLogger().warn("Stutter matrix {} has no locked Gradle versions. Configure the stutter extension and run stutterWriteLocks.", matrix.getName());
+            task.getLogger().warn("Stutter matrix {} has no locked Gradle versions. Configure the stutter extension and run stutterWriteLocks.", matrix.getName());
           });
         });
       }
