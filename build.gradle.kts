@@ -14,6 +14,13 @@ reckon {
   setStageCalc(calcStageFromProp())
 }
 
+mavenCentral {
+  developerName.set("Andrew Oberstar")
+  developerEmail.set("ajoberstar@gmail.com")
+  githubOwner.set("ajoberstar")
+  githubRepository.set("gradle-stutter")
+}
+
 java {
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(11))
