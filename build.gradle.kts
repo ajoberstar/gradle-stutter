@@ -7,6 +7,7 @@ plugins {
 }
 
 group = "org.ajoberstar"
+description = "A Gradle plugin plugin"
 
 reckon {
   stages("beta", "rc", "final")
