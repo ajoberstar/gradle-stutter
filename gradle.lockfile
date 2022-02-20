@@ -10,6 +10,7 @@ net.bytebuddy:byte-buddy:1.11.0=compatTestCompileClasspath,compatTestRuntimeClas
 org.apiguardian:apiguardian-api:1.1.0=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.apiguardian:apiguardian-api:1.1.2=testCompileClasspath
 org.assertj:assertj-core:3.16.1=compatTestCompileClasspath,compatTestRuntimeClasspath
+org.codehaus.groovy:groovy:3.0.8=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.hamcrest:hamcrest:2.2=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.jetbrains:annotations:20.1.0=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.junit.jupiter:junit-jupiter-api:5.8.2=testCompileClasspath,testRuntimeClasspath

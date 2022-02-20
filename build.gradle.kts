@@ -1,25 +1,27 @@
 plugins {
-  id("org.ajoberstar.grgit")
-  id("org.ajoberstar.reckon")
+  id("org.ajoberstar.defaults.gradle-plugin")
+  groovy
 
-  id("java-library-convention")
-  id("java-gradle-plugin")
-  id("groovy")
-
-  id("com.gradle.plugin-publish")
   id("org.ajoberstar.stutter")
-}
-
-reckon {
-  scopeFromProp()
-  stageFromProp("alpha", "beta", "rc", "final")
+  id("org.ajoberstar.reckon")
 }
 
 group = "org.ajoberstar"
 
-// avoid conflict with localGroovy()
-configurations.configureEach {
-  exclude(group = "org.codehaus.groovy")
+reckon {
+  stages("beta", "rc", "final")
+  setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
+  setStageCalc(calcStageFromProp())
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(11))
+  }
+}
+
+repositories {
+  mavenCentral()
 }
 
 dependencies {
@@ -66,25 +68,13 @@ tasks.named("check") {
   dependsOn(tasks.named("compatTest"))
 }
 
-pluginBundle {
-  website = "https://github.com/ajoberstar/gradle-stutter"
-  vcsUrl = "https://github.com/ajoberstar/gradle-stutter.git"
-  description = "A Gradle plugin plugin"
+gradlePlugin {
   plugins {
-    create("stutterPlugin") {
+    create("plugin") {
       id = "org.ajoberstar.stutter"
       displayName = "Stutter Plugin"
-      tags = listOf("plugin-plugin", "testkit", "testing")
+      description = "A Gradle plugin plugin"
+      implementationClass = "org.ajoberstar.gradle.stutter.StutterPlugin"
     }
   }
-  mavenCoordinates {
-    groupId = project.group as String
-    artifactId = project.name as String
-    version = project.version.toString()
-  }
-}
-
-// remove duplicate publication
-gradlePlugin {
-  setAutomatedPublishing(false)
 }
