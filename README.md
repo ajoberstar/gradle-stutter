@@ -3,6 +3,12 @@
 [![Download](https://api.bintray.com/packages/ajoberstar/maven/gradle-stutter/images/download.svg)](https://bintray.com/ajoberstar/maven/gradle-stutter/_latestVersion)
 ![](https://github.com/ajoberstar/gradle-stutter/workflows/.github/workflows/ci.yaml/badge.svg)
 
+## Getting Help or Contributing
+
+**IMPORANT:** I consider this plugin feature complete and don't spend a lot of time on maintenance due to other time commitments. While, I will eventually get to issues or PRs raised, **do not** expect a timely response. I'm not trying to be rude or dismissive, I only get back to this project periodically (on the order of _months_, in many cases). Please set your expectations appropriately as you file issues or open PRs.
+
+Please use the repo's [issues](https://github.com/ajoberstar/gradle-stutter/issues) for all questions, bug reports, and feature requests.
+
 ## Why do you care?
 
 When writing a Gradle plugin you often want to run the same suite of tests against all versions you support. The Gradle TestKit gives you the tools to do this, but makes you write the scaffolding for which versions and which tests.
@@ -166,22 +172,6 @@ stutter {
   }
 }
 ```
-
-## Questions, Bugs, and Features
-
-Please use the repo's [issues](https://github.com/ajoberstar/gradle-stutter/issues)
-for all questions, bug reports, and feature requests.
-
-## Contributing
-
-Contributions are very welcome and are accepted through pull requests.
-
-Smaller changes can come directly as a PR, but larger or more complex
-ones should be discussed in an issue first to flesh out the approach.
-
-If you're interested in implementing a feature on the
-[issues backlog](https://github.com/ajoberstar/gradle-stutter/issues), add a comment
-to make sure it's not already in progress and for any needed discussion.
 
 ## Acknowledgements
 
