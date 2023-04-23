@@ -1,9 +1,8 @@
 plugins {
   id("org.ajoberstar.defaults.gradle-plugin")
-  groovy
+  id("groovy")
 
   id("org.ajoberstar.stutter")
-  id("org.ajoberstar.reckon")
 }
 
 group = "org.ajoberstar"
