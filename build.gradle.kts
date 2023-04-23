@@ -22,7 +22,8 @@ java {
 }
 
 dependencies {
-  implementation("com.fasterxml.jackson.core:jackson-databind:latest.release")
+  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.14,2.15)"))
+  implementation("com.fasterxml.jackson.core:jackson-databind")
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
