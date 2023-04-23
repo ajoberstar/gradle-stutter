@@ -8,12 +8,6 @@ plugins {
 group = "org.ajoberstar"
 description = "A Gradle plugin plugin"
 
-reckon {
-  stages("beta", "rc", "final")
-  setScopeCalc(calcScopeFromProp().or(calcScopeFromCommitMessages()))
-  setStageCalc(calcStageFromProp())
-}
-
 mavenCentral {
   developerName.set("Andrew Oberstar")
   developerEmail.set("ajoberstar@gmail.com")
@@ -27,10 +21,6 @@ java {
   }
 }
 
-repositories {
-  mavenCentral()
-}
-
 dependencies {
   implementation("com.fasterxml.jackson.core:jackson-databind:latest.release")
 
@@ -38,7 +28,7 @@ dependencies {
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
 
   compatTestImplementation(gradleTestKit())
-  compatTestImplementation("org.spockframework:spock-core:2.0-groovy-3.0")
+  compatTestImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
 }
 
 tasks.named<Jar>("jar") {
