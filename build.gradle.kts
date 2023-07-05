@@ -9,15 +9,15 @@ group = "org.ajoberstar"
 description = "A Gradle plugin plugin"
 
 mavenCentral {
-  developerName.set("Andrew Oberstar")
-  developerEmail.set("ajoberstar@gmail.com")
-  githubOwner.set("ajoberstar")
-  githubRepository.set("gradle-stutter")
+  developerName = "Andrew Oberstar"
+  developerEmail = "ajoberstar@gmail.com"
+  githubOwner = "ajoberstar"
+  githubRepository = "gradle-stutter"
 }
 
 java {
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
+    languageVersion = JavaLanguageVersion.of(11)
   }
 }
 
@@ -45,7 +45,7 @@ tasks.withType<Test>() {
 stutter {
   val java11 by matrices.creating {
     javaToolchain {
-      languageVersion.set(JavaLanguageVersion.of(11))
+      languageVersion = JavaLanguageVersion.of(11)
     }
     gradleVersions {
       compatibleRange("7.0")
@@ -54,7 +54,7 @@ stutter {
 
   val java17 by matrices.creating {
     javaToolchain {
-      languageVersion.set(JavaLanguageVersion.of(17))
+      languageVersion = JavaLanguageVersion.of(17)
     }
     gradleVersions {
       compatibleRange("7.3")
