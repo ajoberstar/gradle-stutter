@@ -1,7 +1,7 @@
 # gradle-stutter
 
-[![Download](https://api.bintray.com/packages/ajoberstar/maven/gradle-stutter/images/download.svg)](https://bintray.com/ajoberstar/maven/gradle-stutter/_latestVersion)
-![](https://github.com/ajoberstar/gradle-stutter/workflows/.github/workflows/ci.yaml/badge.svg)
+[![Download](https://img.shields.io/gradle-plugin-portal/v/org.ajoberstar.stutter)](https://plugins.gradle.org/plugin/org.ajoberstar.stutter)
+[![CI](https://github.com/ajoberstar/gradle-stutter/actions/workflows/ci.yaml/badge.svg?branch=main&event=push)](https://github.com/ajoberstar/gradle-stutter/actions/workflows/ci.yaml?branch=main&event=push)
 
 ## Getting Help or Contributing
 
