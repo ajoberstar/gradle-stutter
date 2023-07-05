@@ -32,13 +32,13 @@ dependencies {
   compatTestImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
 }
 
-tasks.named<Jar>("jar") {
+tasks.jar {
   manifest {
-    attributes.put("Automatic-Module-Name", "org.ajoberstar.stutter")
+    attributes["Automatic-Module-Name"] = "org.ajoberstar.stutter"
   }
 }
 
-tasks.withType<Test>() {
+tasks.test {
   useJUnitPlatform()
 }
 
@@ -62,7 +62,7 @@ stutter {
   }
 }
 
-tasks.named("check") {
+tasks.check {
   dependsOn(tasks.named("compatTest"))
 }
 
