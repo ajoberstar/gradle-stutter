@@ -38,7 +38,7 @@ tasks.jar {
   }
 }
 
-tasks.test {
+tasks.withType<Test>().configureEach {
   useJUnitPlatform()
 }
 
