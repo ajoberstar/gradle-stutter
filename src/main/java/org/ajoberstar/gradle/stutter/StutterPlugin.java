@@ -105,7 +105,6 @@ public class StutterPlugin implements Plugin<Project> {
 
   private Map<String, Set<GradleVersion>> getLockedVersions(Project project, StutterExtension stutter) {
     var lockFile = stutter.getLockFile()
-        .forUseAtConfigurationTime()
         .get()
         .getAsFile();
 
@@ -116,8 +115,7 @@ public class StutterPlugin implements Plugin<Project> {
     }
 
     var lockFileBytes = project.getProviders().fileContents(stutter.getLockFile())
-        .getAsBytes()
-        .forUseAtConfigurationTime();
+        .getAsBytes();
 
     try (var inputStream = new ByteArrayInputStream(lockFileBytes.get());
         var reader = new BufferedReader(new InputStreamReader(inputStream))) {
