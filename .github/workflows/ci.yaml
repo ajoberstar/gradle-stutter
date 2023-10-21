@@ -27,3 +27,9 @@ jobs:
         uses: gradle/gradle-build-action@v2
       - name: Gradle check
         run: ./gradlew check --continue
+      - name: Upload Gradle test reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: gradle-tests
+          path: "**/build/reports/tests/"
