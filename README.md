@@ -1,7 +1,8 @@
 # gradle-stutter
 
-[![Download](https://api.bintray.com/packages/ajoberstar/maven/gradle-stutter/images/download.svg)](https://bintray.com/ajoberstar/maven/gradle-stutter/_latestVersion)
 ![](https://github.com/ajoberstar/gradle-stutter/workflows/.github/workflows/ci.yaml/badge.svg)
+
+**NOTE:** As of 0.7.0, gradle-stutter is published to Maven Central
 
 ## Getting Help or Contributing
 
@@ -172,6 +173,27 @@ stutter {
   }
 }
 ```
+
+## Finding versions of grgit
+
+### Newest versions are on Maven Central
+
+As of 0.7.0, gradle-stutter is published to Maven Central and not the Gradle Plugin Portal, but since the portal proxies Maven Central you can still access it through the portal. The only side effect is that [the portal](https://plugins.gradle.org/plugin/org.ajoberstar.gradle-stutter) will no longer list the latest version. Use this repo or [search.maven.org](https://central.sonatype.com/artifact/org.ajoberstar/gradle-stutter/versions) to find the latest version.
+
+### Old versions from Bintray/JCenter
+
+This project was previously uploaded to JCenter, which was deprecated in 2021.
+
+In the event that JCenter is unavailable and acess to past versions (0.6.0 and earlier) is needed, I've made a Maven repo available in [bintray-backup](https://github.com/ajoberstar/bintray-backup). Add the following to your repositories to use it.
+
+```groovy
+maven {
+  name = 'ajoberstar-backup'
+  url = 'https://ajoberstar.org/bintray-backup/'
+}
+```
+
+Made possible by [lacasseio/bintray-helper](https://github.com/lacasseio/bintray-helper) in case you have a similar need to pull your old Bintray artifacts.
 
 ## Acknowledgements
 
