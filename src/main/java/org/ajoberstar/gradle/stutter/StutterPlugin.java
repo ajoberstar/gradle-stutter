@@ -14,7 +14,6 @@ import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.testing.Test;
-import org.gradle.jvm.toolchain.JavaToolchainService;
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
 import org.gradle.util.GradleVersion;
 
@@ -52,7 +51,6 @@ public class StutterPlugin implements Plugin<Project> {
     var lockedVersions = getLockedVersions(project, stutter);
 
     var test = project.getTasks().named("test");
-    var javaToolchains = project.getExtensions().getByType(JavaToolchainService.class);
 
     var root = project.getTasks().register("compatTest", task -> {
       task.setGroup("verification");
