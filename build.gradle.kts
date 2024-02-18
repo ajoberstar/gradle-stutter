@@ -48,7 +48,7 @@ stutter {
       languageVersion.set(JavaLanguageVersion.of(11))
     }
     gradleVersions {
-      compatibleRange("7.0")
+      compatibleRange("7.4.2")
     }
   }
 
@@ -57,7 +57,7 @@ stutter {
       languageVersion.set(JavaLanguageVersion.of(17))
     }
     gradleVersions {
-      compatibleRange("7.3")
+      compatibleRange("7.4.2")
     }
   }
 
