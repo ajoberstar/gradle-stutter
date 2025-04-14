@@ -22,24 +22,25 @@ java {
 }
 
 dependencies {
-  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.14,2.15)"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.18,2.19)"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-
-  testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:latest.release")
 
   compatTestImplementation(gradleTestKit())
   compatTestImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
+}
+
+testing {
+  suites {
+    val test by getting(JvmTestSuite::class) {
+      useJUnitJupiter("latest.release")
+    }
+  }
 }
 
 tasks.named<Jar>("jar") {
   manifest {
     attributes.put("Automatic-Module-Name", "org.ajoberstar.stutter")
   }
-}
-
-tasks.withType<Test>() {
-  useJUnitPlatform()
 }
 
 stutter {
