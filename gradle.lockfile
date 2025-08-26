@@ -2,14 +2,14 @@
 # Manual edits can break the build and are not advised.
 # This file is expected to be part of source control.
 ch.randelshofer:fastdoubleparser:0.8.0=default
-com.fasterxml.jackson.core:jackson-annotations:2.14.3=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
 com.fasterxml.jackson.core:jackson-annotations:2.15.0-rc3=default
-com.fasterxml.jackson.core:jackson-core:2.14.3=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-annotations:2.19.2=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
 com.fasterxml.jackson.core:jackson-core:2.15.0-rc3=default
-com.fasterxml.jackson.core:jackson-databind:2.14.3=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-core:2.19.2=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
 com.fasterxml.jackson.core:jackson-databind:2.15.0-rc3=default
-com.fasterxml.jackson:jackson-bom:2.14.3=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
+com.fasterxml.jackson.core:jackson-databind:2.19.2=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
 com.fasterxml.jackson:jackson-bom:2.15.0-rc3=default
+com.fasterxml.jackson:jackson-bom:2.19.2=compileClasspath,runtimeClasspath,testCompileClasspath,testRuntimeClasspath
 org.apache.groovy:groovy-bom:4.0.4=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.apache.groovy:groovy:4.0.4=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.apiguardian:apiguardian-api:1.1.2=compatTestCompileClasspath,testCompileClasspath

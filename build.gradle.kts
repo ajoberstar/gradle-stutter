@@ -22,7 +22,7 @@ java {
 }
 
 dependencies {
-  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.14,2.15)"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.19,2.20)"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
 }
 
