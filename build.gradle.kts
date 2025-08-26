@@ -48,21 +48,12 @@ tasks.named<Jar>("jar") {
 }
 
 stutter {
-  val java11 by matrices.creating {
-    javaToolchain {
-      languageVersion.set(JavaLanguageVersion.of(11))
-    }
-    gradleVersions {
-      compatibleRange("7.4.2", "9.0")
-    }
-  }
-
   val java17 by matrices.creating {
     javaToolchain {
       languageVersion.set(JavaLanguageVersion.of(17))
     }
     gradleVersions {
-      compatibleRange("7.4.2")
+      compatibleRange("9.0")
     }
   }
 
@@ -71,7 +62,7 @@ stutter {
       languageVersion.set(JavaLanguageVersion.of(21))
     }
     gradleVersions {
-      compatibleRange("8.4")
+      compatibleRange("9.0")
     }
   }
 }
