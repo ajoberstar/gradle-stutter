@@ -22,6 +22,7 @@ org.junit.platform:junit-platform-commons:1.9.0=compatTestCompileClasspath,compa
 org.junit.platform:junit-platform-engine:1.13.4=testRuntimeClasspath
 org.junit.platform:junit-platform-engine:1.9.0=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.junit.platform:junit-platform-launcher:1.13.4=testRuntimeClasspath
+org.junit.platform:junit-platform-launcher:1.9.0=compatTestRuntimeClasspath
 org.junit:junit-bom:5.13.4=testCompileClasspath,testRuntimeClasspath
 org.junit:junit-bom:5.9.0=compatTestCompileClasspath,compatTestRuntimeClasspath
 org.opentest4j:opentest4j:1.2.0=compatTestCompileClasspath,compatTestRuntimeClasspath

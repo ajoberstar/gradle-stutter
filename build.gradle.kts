@@ -17,16 +17,13 @@ mavenCentral {
 
 java {
   toolchain {
-    languageVersion.set(JavaLanguageVersion.of(11))
+    languageVersion.set(JavaLanguageVersion.of(17))
   }
 }
 
 dependencies {
   implementation(platform("com.fasterxml.jackson:jackson-bom:[2.14,2.15)"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-
-  compatTestImplementation(gradleTestKit())
-  compatTestImplementation("org.spockframework:spock-core:2.3-groovy-3.0")
 }
 
 testing {
@@ -34,11 +31,15 @@ testing {
     val test by getting(JvmTestSuite::class) {
       useJUnitJupiter("[5.0,6.0)")
     }
-  }
-}
 
-tasks.withType<Test> {
-  useJUnitPlatform()
+    val compatTest by getting(JvmTestSuite::class) {
+      useSpock("2.3-groovy-3.0")
+
+      dependencies {
+        implementation(gradleTestKit())
+      }
+    }
+  }
 }
 
 tasks.named<Jar>("jar") {
