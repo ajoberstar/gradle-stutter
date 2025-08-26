@@ -42,6 +42,21 @@ plugins {
 ### Configuration
 
 ```groovy
+// as of v2, compatTest is a JVM test suite
+testing {
+  suites {
+    compatTest {
+      // choose your test framework
+      useJUnitJupiter()
+
+      dependencies {
+        // further dependencies
+      }
+    }
+  }
+}
+
+// configure the matrix of version combinations to test
 stutter {
   // if true, only match min/max within that otherwise matches your compatibility specs in each Gradle major version
   sparse = false // defaults to true
@@ -174,7 +189,7 @@ stutter {
 }
 ```
 
-## Finding versions of grgit
+## Finding versions of gradle-stutter
 
 ### Newest versions are on Maven Central
 
