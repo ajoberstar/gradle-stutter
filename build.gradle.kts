@@ -38,15 +38,6 @@ testing {
       dependencies {
         implementation(gradleTestKit())
       }
-
-      // TEMP until beta.2 disable the base target
-      targets {
-        val compatTest by getting {
-          testTask {
-            enabled = false
-          }
-        }
-      }
     }
   }
 }
