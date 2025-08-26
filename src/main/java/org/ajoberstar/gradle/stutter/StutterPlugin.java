@@ -10,11 +10,14 @@ import java.util.stream.Collectors;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.jvm.JvmTestSuite;
+import org.gradle.api.plugins.jvm.JvmTestSuiteTarget;
 import org.gradle.api.provider.ProviderFactory;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.plugin.devel.GradlePluginDevelopmentExtension;
+import org.gradle.testing.base.TestingExtension;
 import org.gradle.util.GradleVersion;
 
 public class StutterPlugin implements Plugin<Project> {
@@ -41,20 +44,21 @@ public class StutterPlugin implements Plugin<Project> {
   }
 
   private void configureCompatTest(Project project, StutterExtension stutter) {
-    var sourceSets = project.getExtensions().getByType(SourceSetContainer.class);
-    sourceSets.register("compatTest", sourceSet -> {
-      createCompatTestTasks(project, stutter, sourceSet);
+    var testing = project.getExtensions().getByType(TestingExtension.class);
+    testing.getSuites().register("compatTest", JvmTestSuite.class, suite -> {
+      createCompatTestTasks(project, stutter, suite);
     });
   }
 
-  private void createCompatTestTasks(Project project, StutterExtension stutter, SourceSet sourceSet) {
+  private void createCompatTestTasks(Project project, StutterExtension stutter, JvmTestSuite suite) {
     var lockedVersions = getLockedVersions(project, stutter);
 
     var test = project.getTasks().named("test");
 
-    var root = project.getTasks().register("compatTest", task -> {
+    var root = project.getTasks().named("compatTest", Test.class, task -> {
       task.setGroup("verification");
       task.setDescription("Run compatibility tests against all supported Gradle and Java versions.");
+      task.setScanForTestClasses(false);
     });
 
     stutter.getMatrices().all(matrix -> {
@@ -79,27 +83,26 @@ public class StutterPlugin implements Plugin<Project> {
 
       matrixLockedVersions.forEach(gradleVersion -> {
         var taskName = String.format("compatTest%sGradle%s", capitalizedMatrixName, gradleVersion.getVersion());
-        var versionTask = project.getTasks().register(taskName, Test.class, task -> {
-          task.setGroup("verification");
-          task.setDescription(String.format("Run compatibility tests for %s against Gradle %s", matrix.getName(), gradleVersion.getVersion()));
 
-          task.getJavaLauncher().set(matrix.getJavaLauncher());
+        var versionTarget = suite.getTargets().register(taskName, target -> {
+          target.getTestTask().configure(task -> {
+            task.setGroup("verification");
+            task.setDescription(String.format("Run compatibility tests for %s against Gradle %s", matrix.getName(), gradleVersion.getVersion()));
 
-          task.setTestClassesDirs(sourceSet.getOutput().getClassesDirs());
-          Callable<FileCollection> classpath = () -> sourceSet.getRuntimeClasspath();
-          task.setClasspath(project.files(classpath));
-          task.systemProperty("compat.gradle.version", gradleVersion.getVersion());
+            task.getJavaLauncher().set(matrix.getJavaLauncher());
+            task.systemProperty("compat.gradle.version", gradleVersion.getVersion());
 
-          task.shouldRunAfter(test);
+            task.shouldRunAfter(test);
+          });
         });
 
-        matrixRoot.configure(rootTask -> rootTask.dependsOn(versionTask));
+        matrixRoot.configure(rootTask -> rootTask.dependsOn(versionTarget.map(JvmTestSuiteTarget::getTestTask)));
       });
     });
 
     project.getPluginManager().withPlugin("java-gradle-plugin", plugin2 -> {
       GradlePluginDevelopmentExtension gradlePlugin = project.getExtensions().getByType(GradlePluginDevelopmentExtension.class);
-      gradlePlugin.testSourceSets(sourceSet);
+      gradlePlugin.testSourceSets(suite.getSources());
     });
   }
 

@@ -37,6 +37,10 @@ testing {
   }
 }
 
+tasks.withType<Test> {
+  useJUnitPlatform()
+}
+
 tasks.named<Jar>("jar") {
   manifest {
     attributes.put("Automatic-Module-Name", "org.ajoberstar.stutter")
