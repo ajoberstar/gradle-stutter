@@ -22,7 +22,7 @@ java {
 }
 
 dependencies {
-  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.18,2.19)"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:[2.19,2.20)"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
 
   compatTestImplementation(gradleTestKit())
@@ -32,7 +32,7 @@ dependencies {
 testing {
   suites {
     val test by getting(JvmTestSuite::class) {
-      useJUnitJupiter("latest.release")
+      useJUnitJupiter("[5.0,6.0)")
     }
   }
 }
