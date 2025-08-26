@@ -58,7 +58,7 @@ public class StutterPlugin implements Plugin<Project> {
     var root = project.getTasks().named("compatTest", Test.class, task -> {
       task.setGroup("verification");
       task.setDescription("Run compatibility tests against all supported Gradle and Java versions.");
-      task.setScanForTestClasses(false);
+      task.setEnabled(false);
     });
 
     stutter.getMatrices().all(matrix -> {

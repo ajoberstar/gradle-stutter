@@ -70,7 +70,7 @@ stutter {
     def result = build('compatTest')
     then:
     result.tasks.collect { it.path } as Set == [':compileCompatTestJava', ':processCompatTestResources', ':compatTestClasses', ':compatTestJava8', ':compatTestJava9', ':compatTest'] as Set
-    result.task(':compatTest').outcome == TaskOutcome.NO_SOURCE
+    result.task(':compatTest').outcome == TaskOutcome.SKIPPED
     result.output.contains('Stutter matrix java8 has no locked Gradle versions')
     result.output.contains('Stutter matrix java9 has no locked Gradle versions')
   }
@@ -93,7 +93,7 @@ java9=4.0.2,4.1,4.2.1
     when:
     def result = build('compatTest')
     then:
-    result.task(':compatTest').outcome == TaskOutcome.NO_SOURCE
+    result.task(':compatTest').outcome == TaskOutcome.SKIPPED
     compatTestTasks.each {
       assert result.task(it).outcome == TaskOutcome.NO_SOURCE || result.task(it).outcome == TaskOutcome.UP_TO_DATE
     }
