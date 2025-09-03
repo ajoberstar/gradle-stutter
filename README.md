@@ -1,5 +1,8 @@
 # gradle-stutter
 
+> [!IMPORTANT]
+> This plugin is now maintained on [SourceHut](https://git.sr.ht/~ajoberstar/gradle-stutter).
+
 ![](https://github.com/ajoberstar/gradle-stutter/workflows/.github/workflows/ci.yaml/badge.svg)
 
 **NOTE:** As of 0.7.0, gradle-stutter is published to Maven Central
